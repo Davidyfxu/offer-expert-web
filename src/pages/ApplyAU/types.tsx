@@ -56,6 +56,7 @@ export const DegreeMap = {
   [DegreeEnum.Master]: <Tag color={"light-blue"}>Master</Tag>,
   [DegreeEnum.PHD]: <Tag>PHD</Tag>,
 };
+
 export const MarryMap = {
   [MarryEnum.Single]: <Tag color={"light-green"}>单身</Tag>,
   [MarryEnum.Married]: <Tag color={"light-blue"}>已婚</Tag>,
