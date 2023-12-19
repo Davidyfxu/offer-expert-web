@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Currencies } from "currencies-map";
-import { get_current } from "./apis";
+import { get_current } from "./api";
 import { format } from "date-fns";
 import { Skeleton, Space } from "@douyinfe/semi-ui";
-import { fi } from "date-fns/locale";
+
 const placeholder = (
   <div>
     <Skeleton.Image style={{ width: "70vw", height: "20vh" }} />

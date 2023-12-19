@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Nav, Button, Avatar, Image } from "@douyinfe/semi-ui";
+import {
+  Layout,
+  Nav,
+  Button,
+  Avatar,
+  Dropdown,
+  Breadcrumb,
+} from "@douyinfe/semi-ui";
 import { IconMoon } from "@douyinfe/semi-icons";
 import { routers } from "../config/routers";
 import { Outlet, useNavigate } from "react-router-dom";
 import menuLogo from "../../assets/menuLogo.jpg";
+import { useUserStore } from "../../stores/userStore";
+import Watermark from "@uiw/react-watermark";
 
 const switchMode = () => {
   const body = document.body;
@@ -13,24 +22,20 @@ const switchMode = () => {
     body.setAttribute("theme-mode", "dark");
   }
 };
-
-const Home = () => {
+const INIT_COLLAPSED = /Android|webOS|iPhone|iPad/i.test(navigator.userAgent);
+const { Header, Footer, Content, Sider } = Layout;
+const Home = (): React.ReactNode => {
   const navigate = useNavigate();
-  const [collapsed, setCollapsed] = useState(false);
-  // isCollapsed
-
-  const { Header, Footer, Content, Sider } = Layout;
-  useEffect(() => {
-    // 在手机端打开
-    if (/Android|webOS|iPhone|iPad/i.test(navigator.userAgent)) {
-      setCollapsed(true);
-    }
-  }, []);
+  const [collapsed, setCollapsed] = useState(INIT_COLLAPSED);
+  const [selectItem, setSelectItem] = useState({ k: [], label: "" });
+  const email = useUserStore((state) => state.email);
+  const name = useUserStore((state) => state.name);
+  const avatar = useUserStore((state) => state.avatar);
 
   return (
     <Layout
       style={{
-        minHeight: "100vh",
+        height: "100vh",
       }}
     >
       <Sider>
@@ -38,14 +43,15 @@ const Home = () => {
           isCollapsed={collapsed}
           onCollapseChange={(c) => setCollapsed(c)}
           style={{ height: "100%" }}
-          defaultSelectedKeys={["Home"]}
+          selectedKeys={selectItem?.k}
           items={routers.map((router: any) => ({
             ...router,
             onClick: () => {
               navigate(`/${router?.itemKey}`);
+              setSelectItem({ k: [router?.itemKey], label: router?.text });
             },
           }))}
-          header={<Image preview src={menuLogo} />}
+          header={<img className={"w-full"} src={menuLogo} alt={""} />}
           footer={{
             collapseButton: true,
           }}
@@ -53,17 +59,43 @@ const Home = () => {
       </Sider>
       <Layout>
         <Header style={{ backgroundColor: "var(--semi-color-bg-1)" }}>
-          <div>
-            <Nav mode="horizontal" defaultSelectedKeys={["Home"]}>
-              <Nav.Footer>
+          <div className={"ml-4 flex justify-between items-center"}>
+            <div>
+              <Breadcrumb>
+                <Breadcrumb.Item>{selectItem?.label}</Breadcrumb.Item>
+              </Breadcrumb>
+            </div>
+            <Nav mode="horizontal">
+              <Nav.Footer className={"flex gap-2"}>
                 <Button
                   theme="borderless"
                   onClick={switchMode}
                   icon={<IconMoon size="large" />}
                 />
-                <Avatar color="orange" size="small">
-                  AU
+                <Avatar
+                  src={avatar}
+                  onClick={() => navigate("/")}
+                  color="orange"
+                  size="small"
+                >
+                  {name.slice(0, 2)}
                 </Avatar>
+                <Dropdown
+                  render={
+                    <Dropdown.Menu>
+                      <Dropdown.Item
+                        onClick={() => {
+                          localStorage.removeItem("token");
+                          setTimeout(() => window.location.reload(), 500);
+                        }}
+                      >
+                        退出
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  }
+                >
+                  {email}
+                </Dropdown>
               </Nav.Footer>
             </Nav>
           </div>
@@ -71,10 +103,13 @@ const Home = () => {
         <Content
           style={{
             padding: "16px",
+            height: "100%",
             backgroundColor: "rgba(var(--semi-indigo-0), 1)",
           }}
         >
-          <Outlet />
+          <Watermark title={"菜博士"} content="Offer Expert">
+            <Outlet />
+          </Watermark>
         </Content>
         <Footer
           style={{
