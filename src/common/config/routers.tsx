@@ -34,7 +34,7 @@ export const routers: NavItems = [
   {
     itemKey: "currency",
     text: "实时汇率",
-    icon: <IconCreditCard size="large" />,
+    icon: <IconHistogram size="large" />,
   },
   {
     itemKey: "userGroup",
@@ -45,5 +45,10 @@ export const routers: NavItems = [
     itemKey: "userSetting",
     text: "用户设置",
     icon: <IconUserSetting size="large" />,
+  },
+  {
+    itemKey: "finance",
+    text: "财务管理",
+    icon: <IconCreditCard size="large" />,
   },
 ];

@@ -4,6 +4,7 @@ import { Home, Landing, Error, Register } from "./common";
 import { LazyRouter, ProtectedRoute } from "./components";
 import * as ChannelService from "@channel.io/channel-web-sdk-loader";
 import * as process from "process";
+import FinanceManage from "./pages/FinanceManage";
 
 const CurrencyExchange = LazyRouter(() => import("./pages/CurrencyExchange"));
 const OffersGPT = LazyRouter(() => import("./pages/OffersGPT"));
@@ -39,6 +40,7 @@ const App = () => (
         <Route path={"currency"} element={<CurrencyExchange />} />
         <Route path={"userGroup"} element={<UserGroup />} />
         <Route path={"userSetting"} element={<UserSetting />} />
+        <Route path={"finance"} element={<FinanceManage />} />
       </Route>
       <Route path="/register" element={<Register />} />
       <Route path="/landing" element={<Landing />} />
