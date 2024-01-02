@@ -4,16 +4,18 @@ import { Form, Spin } from "@douyinfe/semi-ui";
 import { useUserStore } from "../../stores/userStore";
 import { useNavigate } from "react-router-dom";
 
-const Landing = () => {
+const Register = () => {
   const ref = useRef({});
-  const loginUser = useUserStore((state) => state.loginUser);
+  const registerUser = useUserStore((state) => state.registerUser);
   const email = useUserStore((state) => state.email);
   const loading = useUserStore((state) => state.loading);
   const navigate = useNavigate();
   function handleSubmit(): void {
     ref.current.validate().then(() => {
-      const { email, password } = ref.current.getValues() ?? {};
-      void loginUser({ email, password });
+      const { name, email, password, confirmPwd } =
+        ref.current.getValues() ?? {};
+      if (password !== confirmPwd) return;
+      void registerUser({ name, email, password });
     });
   }
 
@@ -30,13 +32,20 @@ const Landing = () => {
       <div className="bg-white mt-8 sm:mx-auto sm:w-full sm:max-w-md rounded-lg shadow-xl">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            登陆到你的账户
+            注册用户
           </h2>
         </div>
         <div className="py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <Form getFormApi={(api) => (ref.current = api)}>
             {({ formState, values, formApi }) => (
               <Spin spinning={loading}>
+                <Form.Input
+                  field="name"
+                  label="昵称"
+                  placeholder="请输入昵称"
+                  showClear
+                  rules={[{ required: true, message: "请输入密码" }]}
+                />
                 <Form.Input
                   field="email"
                   label="邮箱"
@@ -54,12 +63,30 @@ const Landing = () => {
                   showClear
                   rules={[{ required: true, message: "请输入密码" }]}
                 />
-                <div className={"flex justify-between items-center mt-3"}>
-                  <Link to={"/register"}>
-                    <button className="btn">Sign up</button>
-                  </Link>
-                  <button className="btn btn-info" onClick={handleSubmit}>
-                    Log in
+                <Form.Input
+                  field="confirmPwd"
+                  label="确认密码"
+                  mode="password"
+                  placeholder="请确认密码"
+                  showClear
+                  rules={[{ required: true, message: "请确认密码" }]}
+                />
+                <Form.Checkbox field="agree" noLabel>
+                  I have read and agree to the terms of service
+                </Form.Checkbox>
+                <div className={"flex justify-between items-center"}>
+                  <p>
+                    <span>Or</span>
+                    <Link to={"/landing"}>
+                      <button className="btn ml-2">Log in</button>
+                    </Link>
+                  </p>
+                  <button
+                    className="btn btn-info"
+                    disabled={!values.agree}
+                    onClick={handleSubmit}
+                  >
+                    Sign up
                   </button>
                 </div>
               </Spin>
@@ -71,4 +98,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default Register;

@@ -1,6 +1,6 @@
 import { Toast } from "@douyinfe/semi-ui";
 
-const BASE_URL = "https://psqrszkvx9.us.aircode.run";
+export const BASE_URL = "https://cpvg7c.laf.dev";
 export const post = async (url: string, body: any) => {
   try {
     let response = await fetch(BASE_URL + url, {
@@ -8,6 +8,7 @@ export const post = async (url: string, body: any) => {
       body: JSON.stringify(body),
       headers: {
         "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
       },
     });
     return await response.json();

@@ -17,7 +17,6 @@ interface IDetailSheet {
   detail: IAUCase;
 }
 const DetailSheet = ({ visible, onCancel, detail }: IDetailSheet) => {
-  console.log(detail);
   const STUDENT_INFO = [
     {
       key: "姓名",
