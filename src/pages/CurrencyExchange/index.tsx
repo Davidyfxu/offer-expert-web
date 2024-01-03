@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Currencies } from "currencies-map";
 import { get_current } from "./api";
-import { format } from "date-fns";
-import { Skeleton, Space } from "@douyinfe/semi-ui";
+import { Skeleton, Space } from "antd";
+import dayjs from "dayjs";
 
 const placeholder = (
   <div>
@@ -46,10 +46,12 @@ const CurrencyExchange = () => {
         {dates && (
           <div className={"font-medium flex gap-8 text-xl"}>
             <div>
-              当前汇率生成时间：{format(dates?.createTime * 1000, "yyyy-MM-dd")}
+              当前汇率生成时间：
+              {dayjs(dates?.createTime * 1000).format("YYYY-MM-DD")}
             </div>
             <div>
-              下次汇率更新时间：{format(dates?.updateTime * 1000, "yyyy-MM-dd")}
+              下次汇率更新时间：
+              {dayjs(dates?.updateTime * 1000).format("YYYY-MM-DD")}
             </div>
           </div>
         )}

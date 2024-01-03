@@ -1,4 +1,4 @@
-import { Toast } from "@douyinfe/semi-ui";
+import { message } from "antd";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
 export const BASE_URL = "https://cpvg7c.laf.dev";
@@ -53,6 +53,6 @@ export const post = async (url: string, body: any): Promise<any> => {
     return data;
   } catch (e: any) {
     console.error("Error:", e);
-    Toast.error(e.toString());
+    message.error(e.toString());
   }
 };

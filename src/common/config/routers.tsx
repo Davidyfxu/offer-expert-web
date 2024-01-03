@@ -22,21 +22,6 @@ export const routers: NavItems = [
     icon: <IconApartment size="large" />,
   },
   {
-    itemKey: "history",
-    text: "操作历史",
-    icon: <IconHistory size="large" />,
-  },
-  {
-    itemKey: "offersGPT",
-    text: "留学GPT",
-    icon: <IconHistogram size="large" />,
-  },
-  {
-    itemKey: "currency",
-    text: "实时汇率",
-    icon: <IconHistogram size="large" />,
-  },
-  {
     itemKey: "userGroup",
     text: "导师管理",
     icon: <IconUserGroup size="large" />,
@@ -49,6 +34,48 @@ export const routers: NavItems = [
   {
     itemKey: "finance",
     text: "财务管理",
+    icon: <IconCreditCard size="large" />,
+  },
+  // {
+  //   itemKey: "history",
+  //   text: "操作历史",
+  //   icon: <IconHistory size="large" />,
+  // },
+  // {
+  //   itemKey: "offersGPT",
+  //   text: "留学GPT",
+  //   icon: <IconHistogram size="large" />,
+  // },
+  // {
+  //   itemKey: "currency",
+  //   text: "实时汇率",
+  //   icon: <IconHistogram size="large" />,
+  // },
+];
+export const routers2 = [
+  {
+    key: "applyAU",
+    label: "澳洲申请",
+    icon: <IconHome size="large" />,
+  },
+  {
+    key: "applyManage",
+    label: "申请管理",
+    icon: <IconApartment size="large" />,
+  },
+  {
+    key: "userGroup",
+    label: "导师管理",
+    icon: <IconUserGroup size="large" />,
+  },
+  {
+    key: "userSetting",
+    label: "用户设置",
+    icon: <IconUserSetting size="large" />,
+  },
+  {
+    key: "finance",
+    label: "财务管理",
     icon: <IconCreditCard size="large" />,
   },
 ];

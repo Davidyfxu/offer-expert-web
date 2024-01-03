@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Form, Avatar, Button, Toast, Spin } from "@douyinfe/semi-ui";
+import { Form, Avatar, message, Spin } from "antd";
 import { uploadAPI } from "../../utils/const";
 import { IconCamera } from "@douyinfe/semi-icons";
 import { updateUser } from "./apis";
 import { get, isEmpty } from "lodash-es";
-import { StatusCodes } from "http-status-codes";
 const hoverMask = (
   <div
     className={
@@ -22,23 +21,23 @@ const UserSettingPage = (props: {
 }) => {
   const { email, name, avatar = "" } = props;
   const [loading, setLoading] = useState(false);
-  const ref = useRef({});
+  const [form] = Form.useForm();
   useEffect(() => {
     if (email) {
-      ref.current.setValues({ name, avatar });
+      form.setFieldsValue({ name, avatar });
     }
   }, [email]);
   const submit = async () => {
     try {
       setLoading(true);
-      const params = ref.current.getValues();
+      const params = form.getFieldsValue();
       const res = await updateUser({
         ...params,
         email: email,
         avatar: get(params, "avatar.[0].response.data", "") || avatar,
       });
       if (!isEmpty(res)) {
-        Toast.success("个人信息修改成功");
+        message.success("个人信息修改成功");
         setTimeout(() => window.location.reload(), 500);
       }
     } catch (e) {
@@ -58,7 +57,7 @@ const UserSettingPage = (props: {
             修改个人信息
           </h2>
         </div>
-        <Form getFormApi={(api) => (ref.current = api)}>
+        <Form form={form}>
           {({ formApi }) => (
             <>
               <Form.Input
@@ -101,9 +100,11 @@ const UserSettingPage = (props: {
                 label="头像"
                 field="avatar"
                 limit={1}
+                maxSize={1000}
                 showUploadList={false}
-                onSuccess={() => Toast.success("头像上传成功")}
-                onError={(e) => Toast.error("头像上传失败", e?.message)}
+                onSizeError={() => message.error("头像大小应小于1MB")}
+                onSuccess={() => message.success("头像上传成功")}
+                onError={(e) => message.error("头像上传失败", e?.message)}
               >
                 <Avatar
                   src={

@@ -1,11 +1,11 @@
-import { Collapse, Form, Modal, Toast } from "@douyinfe/semi-ui";
+import { Collapse, Form, Modal, message, Input, Select } from "antd";
 import React, { useRef, useState } from "react";
 import { GroupMap, RoleMap } from "../../const";
 import { edit_group_role } from "../../api";
 
 const TeachersManage = (props: any) => {
   const { tutors, setRefresh } = props;
-  const ref = useRef({});
+  const [form] = Form.useForm();
   const [visible, setVisible] = useState(false);
   const showModal = () => {
     setVisible(true);
@@ -15,15 +15,15 @@ const TeachersManage = (props: any) => {
   };
   const handleOk = async () => {
     try {
-      await ref.current?.validate();
-      const { email, group, role } = ref.current?.getValues();
+      await form.validateFields();
+      const { email, group, role } = form.getFieldsValue();
       const { updated } = await edit_group_role({
         email,
         group: Number(group),
         role: Number(role),
       });
       if (updated > 0) {
-        Toast.success("导师分配成功");
+        message.success("导师分配成功");
         setRefresh((r) => r + 1);
         closeModal();
       }
@@ -60,46 +60,55 @@ const TeachersManage = (props: any) => {
       </div>
       <Modal
         title="导师分组"
-        visible={visible}
+        open={visible}
         onOk={handleOk}
         onCancel={closeModal}
         cancelButtonProps={{ className: "btn btn-outline" }}
         okButtonProps={{ className: "btn btn-outline btn-success" }}
       >
-        <Form getFormApi={(api) => (ref.current = api)}>
-          <Form.Select
+        <Form form={form}>
+          <Form.Item
             label={"导师名称"}
             className={"w-full"}
-            field="email"
-            placeholder="请选择成员"
-            optionList={tutors.map((t) => ({
-              label: t?.name,
-              value: t?.email,
-            }))}
+            name="email"
             rules={[{ required: true, type: "email" }]}
-          />
-          <Form.Select
-            field="group"
+          >
+            <Select
+              options={tutors.map((t) => ({
+                label: t?.name,
+                value: t?.email,
+              }))}
+              placeholder="请选择成员"
+            />
+          </Form.Item>
+          <Form.Item
+            name="group"
             label={"导师组"}
             className={"w-full"}
-            placeholder="请选择导师组"
-            optionList={Object.entries(GroupMap).map(([k, v]) => ({
-              value: k,
-              label: v,
-            }))}
             rules={[{ required: true }]}
-          />
-          <Form.Select
-            field="role"
+          >
+            <Select
+              options={Object.entries(GroupMap).map(([k, v]) => ({
+                value: k,
+                label: v,
+              }))}
+              placeholder="请选择成员"
+            />
+          </Form.Item>
+          <Form.Item
+            name="role"
             label={"导师权限"}
             className={"w-full"}
-            placeholder="请选择导师身份"
-            optionList={Object.entries(RoleMap).map(([k, v]) => ({
-              value: k,
-              label: v,
-            }))}
             rules={[{ required: true }]}
-          />
+          >
+            <Select
+              options={Object.entries(RoleMap).map(([k, v]) => ({
+                value: k,
+                label: v,
+              }))}
+              placeholder="请选择导师身份"
+            />
+          </Form.Item>
         </Form>
       </Modal>
     </>

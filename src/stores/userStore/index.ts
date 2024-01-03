@@ -1,6 +1,5 @@
 import { create } from "zustand";
-import { Toast } from "@douyinfe/semi-ui";
-import { StatusCodes } from "http-status-codes";
+import { message } from "antd";
 import { init, login, register } from "../../common/api";
 interface IUserStoreState {
   name: string;
@@ -35,9 +34,9 @@ export const useUserStore = create<IUserStoreState>()((set) => ({
       }));
 
       localStorage.setItem("token", `Bearer ${token}`);
-      Toast.success("注册成功，跳转中");
+      message.success("注册成功，跳转中");
     } catch (e) {
-      Toast.error("注册失败");
+      message.error("注册失败");
       console.error("registerUser", e);
     }
   },
@@ -54,10 +53,10 @@ export const useUserStore = create<IUserStoreState>()((set) => ({
       }));
 
       localStorage.setItem("token", `Bearer ${token}`);
-      Toast.success("登录成功，跳转中");
+      message.success("登录成功，跳转中");
     } catch (e) {
       console.error("loginUser", e);
-      Toast.error("登录失败 ");
+      message.error("登录失败 ");
     }
   },
   init: async (): Promise<any> => {
