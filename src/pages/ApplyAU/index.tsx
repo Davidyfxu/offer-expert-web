@@ -2,19 +2,18 @@ import React, { useEffect, useState } from "react";
 import {
   Button,
   Dropdown,
-  Modal,
   Popconfirm,
   Table,
   Toast,
   Typography,
 } from "@douyinfe/semi-ui";
 import { assign_au_case, delete_au_case, get_au_case } from "./apis";
-import { format } from "date-fns";
 import { IAUCase } from "./types";
 import DetailSheet from "./components/DetailSheet";
 import { AU_URL } from "./const";
 import AssignModal from "../../components/AssignModal";
 import { StatusCodes } from "http-status-codes";
+import dayjs from "dayjs";
 const { Text, Title } = Typography;
 const ApplyAU = () => {
   const [refresh, setRefresh] = useState<number>(0);
@@ -97,8 +96,7 @@ const ApplyAU = () => {
       title: "Birth",
       dataIndex: "birth",
       width: 120,
-      render: (text: number) => text,
-      // render: (text: number) => format(text * 1000, "yyyy-MM-dd"),
+      render: (text: number) => dayjs(text * 1000).format("YYYY-MM-DD"),
     },
     {
       title: "Email",

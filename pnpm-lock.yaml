@@ -15,7 +15,6 @@ specifiers:
   crypto-js: ^4.1.1
   currencies-map: ^3.3.5
   daisyui: ^3.9.3
-  date-fns: ^2.30.0
   dayjs: ^1.11.10
   http-status-codes: ^2.3.0
   lodash-es: ^4.17.21
@@ -38,7 +37,6 @@ dependencies:
   '@douyinfe/semi-ui': 2.49.0_biqbaboplfbrettd7655fr4n2y
   '@types/node': 16.18.68
   axios: 1.6.2
-  date-fns: 2.30.0
   lodash-es: 4.17.21
   prettier: 3.1.1
   react: 18.2.0

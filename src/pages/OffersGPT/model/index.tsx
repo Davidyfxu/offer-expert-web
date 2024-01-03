@@ -13,12 +13,12 @@ function getWebsocketUrl(): Promise<string> {
     const date = new Date().toGMTString();
     const algorithm = "hmac-sha256";
     const headers = "host date request-line";
-    const signatureOrigin = `host: ${host}\ndate: ${date}\nGET /v1.1/chat HTTP/1.1`;
+    const signatureOrigin = `host: ${host}\ndate: ${date}\nGET /v3.1/chat HTTP/1.1`;
     const signatureSha = CryptoJS.HmacSHA256(signatureOrigin, apiSecret);
     const signature = CryptoJS.enc.Base64.stringify(signatureSha);
     const authorizationOrigin = `api_key="${apiKey}", algorithm="${algorithm}", headers="${headers}", signature="${signature}"`;
     const authorization = btoa(authorizationOrigin);
-    const url = `wss://spark-api.xf-yun.com/v1.1/chat?authorization=${authorization}&date=${date}&host=${host}`;
+    const url = `wss://spark-api.xf-yun.com/v3.1/chat?authorization=${authorization}&date=${date}&host=${host}`;
     resolve(url);
   });
 }
@@ -59,7 +59,7 @@ class TTSRecorder {
       },
       parameter: {
         chat: {
-          domain: "general",
+          domain: "generalv3",
           temperature: 0.5,
           max_tokens: 1024,
         },
