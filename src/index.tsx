@@ -4,7 +4,6 @@ import { Home, Landing, Error, Register } from "./common";
 import { LazyRouter, ProtectedRoute } from "./components";
 import * as ChannelService from "@channel.io/channel-web-sdk-loader";
 import * as process from "process";
-import FinanceManage from "./pages/FinanceManage";
 
 const CurrencyExchange = LazyRouter(() => import("./pages/CurrencyExchange"));
 const OffersGPT = LazyRouter(() => import("./pages/OffersGPT"));
@@ -14,6 +13,7 @@ const History = LazyRouter(() => import("./pages/History"));
 const UserGroup = LazyRouter(() => import("./pages/UserGroup"));
 const UserSetting = LazyRouter(() => import("./pages/UserSetting"));
 const ApplyManage = LazyRouter(() => import("./pages/ApplyManage"));
+const FinanceManage = LazyRouter(() => import("./pages/FinanceManage"));
 
 if (process.env.NODE_ENV === "production") {
   ChannelService.loadScript();

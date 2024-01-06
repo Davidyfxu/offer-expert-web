@@ -1,5 +1,5 @@
 import Home from "./Home";
-import Landing from "./Landng";
+import Landing from "./Landing";
 import Error from "./Error";
 import Register from "./Register";
 

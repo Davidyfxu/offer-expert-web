@@ -21,6 +21,11 @@ const switchMode = () => {
   } else {
     body.setAttribute("theme-mode", "dark");
   }
+  if (body.hasAttribute("data-theme")) {
+    body.removeAttribute("data-theme");
+  } else {
+    body.setAttribute("data-theme", "dark");
+  }
 };
 const INIT_COLLAPSED = /Android|webOS|iPhone|iPad/i.test(navigator.userAgent);
 const { Header, Footer, Content, Sider } = Layout;
@@ -104,7 +109,7 @@ const Home = (): React.ReactNode => {
           style={{
             padding: "16px",
             height: "100%",
-            backgroundColor: "rgba(var(--semi-indigo-0), 1)",
+            backgroundColor: "rgba(var(--semi-grey-0), 1)",
           }}
         >
           <Watermark title={"菜博士"} content="Offer Expert">
