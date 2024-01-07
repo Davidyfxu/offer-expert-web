@@ -14,6 +14,7 @@ const UserGroup = LazyRouter(() => import("./pages/UserGroup"));
 const UserSetting = LazyRouter(() => import("./pages/UserSetting"));
 const ApplyManage = LazyRouter(() => import("./pages/ApplyManage"));
 const FinanceManage = LazyRouter(() => import("./pages/FinanceManage"));
+const Student = LazyRouter(() => import("./pages/Student"));
 
 if (process.env.NODE_ENV === "production") {
   ChannelService.loadScript();
@@ -41,6 +42,7 @@ const App = () => (
         <Route path={"userGroup"} element={<UserGroup />} />
         <Route path={"userSetting"} element={<UserSetting />} />
         <Route path={"finance"} element={<FinanceManage />} />
+        <Route path={"student"} element={<Student />} />
       </Route>
       <Route path="/register" element={<Register />} />
       <Route path="/landing" element={<Landing />} />

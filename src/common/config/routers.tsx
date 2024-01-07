@@ -22,21 +22,6 @@ export const routers: NavItems = [
     icon: <IconApartment size="large" />,
   },
   {
-    itemKey: "history",
-    text: "操作历史",
-    icon: <IconHistory size="large" />,
-  },
-  {
-    itemKey: "offersGPT",
-    text: "留学GPT",
-    icon: <IconHistogram size="large" />,
-  },
-  {
-    itemKey: "currency",
-    text: "实时汇率",
-    icon: <IconHistogram size="large" />,
-  },
-  {
     itemKey: "userGroup",
     text: "导师管理",
     icon: <IconUserGroup size="large" />,
@@ -51,4 +36,19 @@ export const routers: NavItems = [
     text: "财务管理",
     icon: <IconCreditCard size="large" />,
   },
+  // {
+  //   itemKey: "history",
+  //   text: "操作历史",
+  //   icon: <IconHistory size="large" />,
+  // },
+  // {
+  //   itemKey: "offersGPT",
+  //   text: "留学GPT",
+  //   icon: <IconHistogram size="large" />,
+  // },
+  // {
+  //   itemKey: "currency",
+  //   text: "实时汇率",
+  //   icon: <IconHistogram size="large" />,
+  // },
 ];

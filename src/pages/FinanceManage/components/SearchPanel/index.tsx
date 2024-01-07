@@ -36,7 +36,7 @@ const SearchPanel = () => {
             />
           </div>
         </div>
-        <div className="indicator ml-1">
+        <div className="ml-1">
           <button className="btn btn-info join-item">搜索</button>
         </div>
       </div>

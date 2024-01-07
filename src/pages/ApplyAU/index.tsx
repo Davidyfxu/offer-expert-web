@@ -14,8 +14,10 @@ import { AU_URL } from "./const";
 import AssignModal from "../../components/AssignModal";
 import { StatusCodes } from "http-status-codes";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 const { Text, Title } = Typography;
 const ApplyAU = () => {
+  const navigate = useNavigate();
   const [refresh, setRefresh] = useState<number>(0);
   const [records, setRecords] = useState<IAUCase[]>([]);
   const [loading, setLoading] = useState(false);
@@ -112,6 +114,13 @@ const ApplyAU = () => {
         <div className={"flex space-x-1"}>
           <Button
             onClick={() => {
+              navigate(`/student?_id=${record?._id}`);
+            }}
+          >
+            Go
+          </Button>
+          <Button
+            onClick={() => {
               setDetail(record);
               setVisible(true);
             }}
@@ -120,7 +129,7 @@ const ApplyAU = () => {
           </Button>
           <Button
             onClick={() =>
-              window.open(`${AU_URL}?_id=${record?._id}`, "_blank")
+              window.open(`${AU_URL}/applyAU?_id=${record?._id}`, "_blank")
             }
           >
             编辑
@@ -154,7 +163,6 @@ const ApplyAU = () => {
                 >
                   指派
                 </Dropdown.Item>
-                <Dropdown.Item>Menu Item 3</Dropdown.Item>
               </Dropdown.Menu>
             }
           >
