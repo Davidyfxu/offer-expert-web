@@ -1,8 +1,7 @@
-import { Button, Collapse, Form, Modal, Toast } from "@douyinfe/semi-ui";
+import { Collapse, Form, Modal, Toast } from "@douyinfe/semi-ui";
 import React, { useRef, useState } from "react";
-import { GroupEnum, GroupMap, RoleMap } from "../../const";
+import { GroupMap, RoleMap } from "../../const";
 import { edit_group_role } from "../../api";
-import { StatusCodes } from "http-status-codes";
 
 const TeachersManage = (props: any) => {
   const { tutors, setRefresh } = props;
@@ -18,12 +17,12 @@ const TeachersManage = (props: any) => {
     try {
       await ref.current?.validate();
       const { email, group, role } = ref.current?.getValues();
-      const { StatusCode } = await edit_group_role({
+      const { updated } = await edit_group_role({
         email,
         group: Number(group),
         role: Number(role),
       });
-      if (StatusCode === StatusCodes.OK) {
+      if (updated > 0) {
         Toast.success("导师分配成功");
         setRefresh((r) => r + 1);
         closeModal();

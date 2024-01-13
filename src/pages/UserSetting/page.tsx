@@ -3,7 +3,7 @@ import { Form, Avatar, Button, Toast, Spin } from "@douyinfe/semi-ui";
 import { uploadAPI } from "../../utils/const";
 import { IconCamera } from "@douyinfe/semi-icons";
 import { updateUser } from "./apis";
-import { get } from "lodash-es";
+import { get, isEmpty } from "lodash-es";
 import { StatusCodes } from "http-status-codes";
 const hoverMask = (
   <div
@@ -32,24 +32,21 @@ const UserSettingPage = (props: {
     try {
       setLoading(true);
       const params = ref.current.getValues();
-      const { StatusCode } = await updateUser({
+      const res = await updateUser({
         ...params,
         email: email,
-        avatar: get(params, "avatar.[0].response", ""),
+        avatar: get(params, "avatar.[0].response.data", "") || avatar,
       });
-      if (StatusCode !== StatusCodes.OK) {
-        Toast.error("个人信息修改失败");
-        return;
+      if (!isEmpty(res)) {
+        Toast.success("个人信息修改成功");
+        setTimeout(() => window.location.reload(), 500);
       }
-      Toast.success("个人信息修改成功");
-      setTimeout(() => window.location.reload(), 500);
     } catch (e) {
       console.error("submit", e);
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <div
       className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
@@ -110,7 +107,7 @@ const UserSettingPage = (props: {
               >
                 <Avatar
                   src={
-                    formApi.getValue("avatar")?.[0]?.response ||
+                    formApi.getValue("avatar")?.[0]?.response?.data ||
                     formApi.getValue("avatar")
                   }
                   size={"large"}

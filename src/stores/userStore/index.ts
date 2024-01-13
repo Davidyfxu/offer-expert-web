@@ -24,29 +24,27 @@ export const useUserStore = create<IUserStoreState>()((set) => ({
   // setUser: (props) => set({ ...props }),
   registerUser: async (props): Promise<any> => {
     try {
-      set((state) => ({ loading: true }));
-      const { StatusCode, user, token, error } = await register({
+      set(() => ({ loading: true }));
+      const { user, token } = await register({
         ...props,
         password: btoa(props.password),
       });
-      set((state) => ({
+      set(() => ({
         ...user,
         loading: false,
       }));
-      if (StatusCode === StatusCodes.CREATED) {
-        localStorage.setItem("token", `Bearer ${token}`);
-        Toast.success("注册成功，跳转中");
-      } else {
-        Toast.error("注册失败" + error);
-      }
+
+      localStorage.setItem("token", `Bearer ${token}`);
+      Toast.success("注册成功，跳转中");
     } catch (e) {
+      Toast.error("注册失败");
       console.error("registerUser", e);
     }
   },
   loginUser: async (props): Promise<any> => {
     try {
       set((state) => ({ loading: true }));
-      const { StatusCode, user, token, error } = await login({
+      const { user, token } = await login({
         ...props,
         password: btoa(props.password),
       });
@@ -54,30 +52,30 @@ export const useUserStore = create<IUserStoreState>()((set) => ({
         ...user,
         loading: false,
       }));
-      if (StatusCode === StatusCodes.OK) {
-        localStorage.setItem("token", `Bearer ${token}`);
-        Toast.success("登录成功，跳转中");
-      } else {
-        Toast.error("登录失败 " + error);
-      }
+
+      localStorage.setItem("token", `Bearer ${token}`);
+      Toast.success("登录成功，跳转中");
     } catch (e) {
       console.error("loginUser", e);
+      Toast.error("登录失败 ");
     }
   },
   init: async (): Promise<any> => {
     try {
       set((state) => ({ loading: true }));
-      const { user, StatusCode } = await init({});
+      const { user } = await init({});
       set((state) => ({
         ...user,
         loading: false,
       }));
-      if (StatusCode !== StatusCodes.OK) {
-        return { redirect: true };
-      }
+
       return { redirect: false };
     } catch (e) {
       console.error("loginUser", e);
+      set(() => ({
+        loading: false,
+      }));
+      return { redirect: true };
     }
   },
 }));
