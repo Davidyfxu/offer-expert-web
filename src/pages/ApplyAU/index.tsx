@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Dropdown,
-  Modal,
-  Popconfirm,
-  Table,
-  Toast,
-  Typography,
-} from "@douyinfe/semi-ui";
+import { Button, Dropdown, Popconfirm, Table, message, Typography } from "antd";
 import { assign_au_case, delete_au_case, get_au_case } from "./apis";
-import { format } from "date-fns";
 import { IAUCase } from "./types";
 import DetailSheet from "./components/DetailSheet";
 import { AU_URL } from "./const";
 import AssignModal from "../../components/AssignModal";
 import { StatusCodes } from "http-status-codes";
+import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 const { Text, Title } = Typography;
 const ApplyAU = () => {
+  const navigate = useNavigate();
   const [refresh, setRefresh] = useState<number>(0);
   const [records, setRecords] = useState<IAUCase[]>([]);
   const [loading, setLoading] = useState(false);
@@ -42,7 +36,7 @@ const ApplyAU = () => {
     try {
       setLoading(true);
       const res = await delete_au_case({ _id });
-      res?.result?.deletedCount > 0 && Toast.success("此条case已删除");
+      res?.result?.deletedCount > 0 && message.success("此条case已删除");
       setLoading(false);
       setTimeout(() => {
         setRefresh((r) => r + 1);
@@ -97,8 +91,7 @@ const ApplyAU = () => {
       title: "Birth",
       dataIndex: "birth",
       width: 120,
-      render: (text: number) => text,
-      // render: (text: number) => format(text * 1000, "yyyy-MM-dd"),
+      render: (text: number) => dayjs(text * 1000).format("YYYY-MM-DD"),
     },
     {
       title: "Email",
@@ -114,6 +107,13 @@ const ApplyAU = () => {
         <div className={"flex space-x-1"}>
           <Button
             onClick={() => {
+              navigate(`/student?_id=${record?._id}`);
+            }}
+          >
+            Go
+          </Button>
+          <Button
+            onClick={() => {
               setDetail(record);
               setVisible(true);
             }}
@@ -122,7 +122,7 @@ const ApplyAU = () => {
           </Button>
           <Button
             onClick={() =>
-              window.open(`${AU_URL}?_id=${record?._id}`, "_blank")
+              window.open(`${AU_URL}/applyAU?_id=${record?._id}`, "_blank")
             }
           >
             编辑
@@ -131,6 +131,17 @@ const ApplyAU = () => {
             trigger={"click"}
             render={
               <Dropdown.Menu>
+                <Dropdown.Item
+                  onClick={() =>
+                    setAssignModal({
+                      v: true,
+                      t: `${record?.lastName} ${record?.firstName}分配导师`,
+                      _id: record?._id,
+                    })
+                  }
+                >
+                  指派
+                </Dropdown.Item>
                 <Dropdown.Item>
                   <Popconfirm
                     position={"left"}
@@ -145,18 +156,6 @@ const ApplyAU = () => {
                     删除
                   </Popconfirm>
                 </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() =>
-                    setAssignModal({
-                      v: true,
-                      t: `${record?.lastName} ${record?.firstName}分配导师`,
-                      _id: record?._id,
-                    })
-                  }
-                >
-                  指派
-                </Dropdown.Item>
-                <Dropdown.Item>Menu Item 3</Dropdown.Item>
               </Dropdown.Menu>
             }
           >
@@ -175,15 +174,15 @@ const ApplyAU = () => {
     }>;
   }): Promise<{ code: StatusCodes }> => {
     try {
-      const { code } = await assign_au_case({
+      await assign_au_case({
         ...params,
         _id: assignModal?._id,
       });
       setTimeout(() => setRefresh((r) => r + 1), 1000);
-      return { code };
+      message.success("导师分配成功");
     } catch (e) {
       console.error(e);
-      return { code: StatusCodes.FORBIDDEN };
+      message.error("导师分配失败");
     }
   };
 

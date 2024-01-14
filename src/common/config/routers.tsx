@@ -1,54 +1,63 @@
 import React from "react";
 import {
-  IconApartment,
-  IconCreditCard,
-  IconHistogram,
-  IconHistory,
-  IconHome,
-  IconUserGroup,
-  IconUserSetting,
-} from "@douyinfe/semi-icons";
-import { NavItems } from "@douyinfe/semi-ui/lib/es/navigation";
+  ApartmentOutlined,
+  HomeOutlined,
+  MoneyCollectOutlined,
+  UsergroupAddOutlined,
+  UserSwitchOutlined,
+} from "@ant-design/icons";
 
-export const routers: NavItems = [
+export const routers = [
   {
     itemKey: "applyAU",
     text: "澳洲申请",
-    icon: <IconHome size="large" />,
+    icon: <HomeOutlined />,
   },
   {
     itemKey: "applyManage",
     text: "申请管理",
-    icon: <IconApartment size="large" />,
-  },
-  {
-    itemKey: "history",
-    text: "操作历史",
-    icon: <IconHistory size="large" />,
-  },
-  {
-    itemKey: "offersGPT",
-    text: "留学GPT",
-    icon: <IconHistogram size="large" />,
-  },
-  {
-    itemKey: "currency",
-    text: "实时汇率",
-    icon: <IconHistogram size="large" />,
+    icon: <ApartmentOutlined />,
   },
   {
     itemKey: "userGroup",
     text: "导师管理",
-    icon: <IconUserGroup size="large" />,
+    icon: <UsergroupAddOutlined />,
   },
   {
     itemKey: "userSetting",
     text: "用户设置",
-    icon: <IconUserSetting size="large" />,
+    icon: <UserSwitchOutlined />,
   },
   {
     itemKey: "finance",
     text: "财务管理",
-    icon: <IconCreditCard size="large" />,
+    icon: <MoneyCollectOutlined />,
+  },
+];
+export const routers2 = [
+  {
+    key: "applyAU",
+    label: "澳洲申请",
+    icon: <HomeOutlined />,
+  },
+  {
+    key: "applyManage",
+    label: "申请管理",
+    icon: <ApartmentOutlined />,
+  },
+  {
+    key: "userGroup",
+    label: "导师管理",
+    icon: <UsergroupAddOutlined />,
+  },
+  {
+    key: "userSetting",
+    label: "用户设置",
+    icon: <UserSwitchOutlined />,
+  },
+  {
+    key: "finance",
+    label: "财务管理",
+    icon: <MoneyCollectOutlined />,
   },
 ];

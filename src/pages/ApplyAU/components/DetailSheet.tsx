@@ -1,15 +1,7 @@
 import React from "react";
-import {
-  Card,
-  Descriptions,
-  List,
-  SideSheet,
-  Space,
-  Tag,
-  Typography,
-} from "@douyinfe/semi-ui";
+import { Descriptions, List, Drawer, Space, Tag, Typography } from "antd";
 import { DegreeMap, IAUCase, MarryMap } from "../types";
-import { format } from "date-fns";
+import dayjs from "dayjs";
 const { Text, Title } = Typography;
 interface IDetailSheet {
   visible: boolean;
@@ -31,7 +23,10 @@ const DetailSheet = ({ visible, onCancel, detail }: IDetailSheet) => {
       key: "性别",
       value: detail?.sex === 1 ? <Tag>男</Tag> : <Tag color={"pink"}>女</Tag>,
     },
-    { key: "生日", value: format((detail?.birth || 0) * 1000, "yyyy-MM-dd") },
+    {
+      key: "生日",
+      value: dayjs(Number(detail?.birth) * 1000).format("YYYY-MM-DD"),
+    },
     { key: "婚姻", value: MarryMap[detail?.marry] },
     { key: "邮箱", value: detail?.email },
     { key: "护照", value: detail?.passport },
@@ -49,7 +44,7 @@ const DetailSheet = ({ visible, onCancel, detail }: IDetailSheet) => {
     {
       key: "就读日期",
       value: (detail?.period ?? [])
-        .map((p) => format(Number(p) * 1000, "yyyy-MM-dd"))
+        .map((p) => dayjs(Number(p) * 1000).format("YYYY-MM-DD"))
         .join(" - "),
     },
     { key: "有无拒签历史", value: String(Boolean(detail?.visaReject)) },
@@ -64,12 +59,12 @@ const DetailSheet = ({ visible, onCancel, detail }: IDetailSheet) => {
     { key: "导师邮箱", value: detail?.teacherEmail },
   ];
   return (
-    <SideSheet
+    <Drawer
       title="详情"
       width={640}
       bodyStyle={{ display: "flex", flexDirection: "column", gap: 8 }}
-      visible={visible}
-      onCancel={onCancel}
+      open={visible}
+      onClose={onCancel}
     >
       <div>
         <Title heading={3} style={{ marginBottom: 8 }}>
@@ -102,7 +97,9 @@ const DetailSheet = ({ visible, onCancel, detail }: IDetailSheet) => {
                     { key: "学制", value: `${item?.learningPeriod}年` },
                     {
                       key: "入学时间",
-                      value: format((item?.entryMonth || 0) * 1000, "yyyy-MMM"),
+                      value: dayjs(Number(item?.entryMonth) * 1000).format(
+                        "YYYY-MMM",
+                      ),
                     },
                     {
                       key: "专业链接",
@@ -137,7 +134,7 @@ const DetailSheet = ({ visible, onCancel, detail }: IDetailSheet) => {
         </Title>
         <Descriptions data={TUTOR_INFO} />
       </div>
-    </SideSheet>
+    </Drawer>
   );
 };
 

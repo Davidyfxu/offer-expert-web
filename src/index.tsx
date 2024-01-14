@@ -4,16 +4,15 @@ import { Home, Landing, Error, Register } from "./common";
 import { LazyRouter, ProtectedRoute } from "./components";
 import * as ChannelService from "@channel.io/channel-web-sdk-loader";
 import * as process from "process";
-import FinanceManage from "./pages/FinanceManage";
 
 const CurrencyExchange = LazyRouter(() => import("./pages/CurrencyExchange"));
-const OffersGPT = LazyRouter(() => import("./pages/OffersGPT"));
 const ApplyAU = LazyRouter(() => import("./pages/ApplyAU"));
 const ApplyOthers = LazyRouter(() => import("./pages/ApplyOthers"));
-const History = LazyRouter(() => import("./pages/History"));
 const UserGroup = LazyRouter(() => import("./pages/UserGroup"));
 const UserSetting = LazyRouter(() => import("./pages/UserSetting"));
 const ApplyManage = LazyRouter(() => import("./pages/ApplyManage"));
+const FinanceManage = LazyRouter(() => import("./pages/FinanceManage"));
+const Student = LazyRouter(() => import("./pages/Student"));
 
 if (process.env.NODE_ENV === "production") {
   ChannelService.loadScript();
@@ -35,12 +34,11 @@ const App = () => (
         <Route path={"applyAU"} element={<ApplyAU />} />
         <Route path={"applyManage"} element={<ApplyManage />} />
         <Route path={"applyOthers"} element={<ApplyOthers />} />
-        <Route path={"history"} element={<History />} />
-        <Route path={"offersGPT"} element={<OffersGPT />} />
         <Route path={"currency"} element={<CurrencyExchange />} />
         <Route path={"userGroup"} element={<UserGroup />} />
         <Route path={"userSetting"} element={<UserSetting />} />
         <Route path={"finance"} element={<FinanceManage />} />
+        <Route path={"student"} element={<Student />} />
       </Route>
       <Route path="/register" element={<Register />} />
       <Route path="/landing" element={<Landing />} />

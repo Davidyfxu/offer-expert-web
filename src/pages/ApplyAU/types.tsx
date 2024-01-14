@@ -1,5 +1,5 @@
 import { Dayjs } from "dayjs";
-import { Tag } from "@douyinfe/semi-ui";
+import { Tag } from "antd";
 
 export interface IAUCase {
   _id?: string;

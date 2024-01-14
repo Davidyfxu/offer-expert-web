@@ -1,14 +1,7 @@
 import React, { useState } from "react";
-import {
-  Layout,
-  Nav,
-  Button,
-  Avatar,
-  Dropdown,
-  Breadcrumb,
-} from "@douyinfe/semi-ui";
-import { IconMoon } from "@douyinfe/semi-icons";
-import { routers } from "../config/routers";
+import { Layout, Menu, Button, Avatar, Dropdown, Breadcrumb } from "antd";
+import { HighlightOutlined } from "@ant-design/icons";
+import { routers, routers2 } from "../config/routers";
 import { Outlet, useNavigate } from "react-router-dom";
 import menuLogo from "../../assets/menuLogo.jpg";
 import { useUserStore } from "../../stores/userStore";
@@ -20,6 +13,11 @@ const switchMode = () => {
     body.removeAttribute("theme-mode");
   } else {
     body.setAttribute("theme-mode", "dark");
+  }
+  if (body.hasAttribute("data-theme")) {
+    body.removeAttribute("data-theme");
+  } else {
+    body.setAttribute("data-theme", "dark");
   }
 };
 const INIT_COLLAPSED = /Android|webOS|iPhone|iPad/i.test(navigator.userAgent);
@@ -39,19 +37,19 @@ const Home = (): React.ReactNode => {
       }}
     >
       <Sider>
-        <Nav
+        <img className={"p-8 w-full"} src={menuLogo} alt={""} />
+        <Menu
           isCollapsed={collapsed}
           onCollapseChange={(c) => setCollapsed(c)}
           style={{ height: "100%" }}
           selectedKeys={selectItem?.k}
-          items={routers.map((router: any) => ({
+          items={routers2.map((router: any) => ({
             ...router,
             onClick: () => {
-              navigate(`/${router?.itemKey}`);
-              setSelectItem({ k: [router?.itemKey], label: router?.text });
+              navigate(`/${router?.key}`);
+              setSelectItem({ k: [router?.key], label: router?.label });
             },
           }))}
-          header={<img className={"w-full"} src={menuLogo} alt={""} />}
           footer={{
             collapseButton: true,
           }}
@@ -65,46 +63,46 @@ const Home = (): React.ReactNode => {
                 <Breadcrumb.Item>{selectItem?.label}</Breadcrumb.Item>
               </Breadcrumb>
             </div>
-            <Nav mode="horizontal">
-              <Nav.Footer className={"flex gap-2"}>
-                <Button
-                  theme="borderless"
-                  onClick={switchMode}
-                  icon={<IconMoon size="large" />}
-                />
-                <Avatar
-                  src={avatar}
-                  onClick={() => navigate("/")}
-                  color="orange"
-                  size="small"
-                >
-                  {name.slice(0, 2)}
-                </Avatar>
-                <Dropdown
-                  render={
-                    <Dropdown.Menu>
-                      <Dropdown.Item
-                        onClick={() => {
-                          localStorage.removeItem("token");
-                          setTimeout(() => window.location.reload(), 500);
-                        }}
-                      >
-                        退出
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  }
-                >
-                  {email}
-                </Dropdown>
-              </Nav.Footer>
-            </Nav>
+            {/*<Nav mode="horizontal">*/}
+            {/*  <Nav.Footer className={"flex gap-2"}>*/}
+            {/*    <Button*/}
+            {/*      theme="borderless"*/}
+            {/*      onClick={switchMode}*/}
+            {/*      icon={<HighlightOutlined />}*/}
+            {/*    />*/}
+            {/*    <Avatar*/}
+            {/*      src={avatar}*/}
+            {/*      onClick={() => navigate("/")}*/}
+            {/*      color="orange"*/}
+            {/*      size="small"*/}
+            {/*    >*/}
+            {/*      {name.slice(0, 2)}*/}
+            {/*    </Avatar>*/}
+            {/*    <Dropdown*/}
+            {/*      render={*/}
+            {/*        <Dropdown.Menu>*/}
+            {/*          <Dropdown.Item*/}
+            {/*            onClick={() => {*/}
+            {/*              localStorage.removeItem("token");*/}
+            {/*              setTimeout(() => window.location.reload(), 500);*/}
+            {/*            }}*/}
+            {/*          >*/}
+            {/*            退出*/}
+            {/*          </Dropdown.Item>*/}
+            {/*        </Dropdown.Menu>*/}
+            {/*      }*/}
+            {/*    >*/}
+            {/*      {email}*/}
+            {/*    </Dropdown>*/}
+            {/*  </Nav.Footer>*/}
+            {/*</Nav>*/}
           </div>
         </Header>
         <Content
           style={{
             padding: "16px",
             height: "100%",
-            backgroundColor: "rgba(var(--semi-indigo-0), 1)",
+            backgroundColor: "rgba(var(--semi-grey-0), 1)",
           }}
         >
           <Watermark title={"菜博士"} content="Offer Expert">

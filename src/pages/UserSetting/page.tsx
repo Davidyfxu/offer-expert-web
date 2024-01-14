@@ -1,17 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Form, Avatar, Button, Toast, Spin } from "@douyinfe/semi-ui";
+import { Form, Avatar, message, Spin } from "antd";
 import { uploadAPI } from "../../utils/const";
-import { IconCamera } from "@douyinfe/semi-icons";
 import { updateUser } from "./apis";
-import { get } from "lodash-es";
-import { StatusCodes } from "http-status-codes";
+import { get, isEmpty } from "lodash-es";
+import { CameraOutlined } from "@ant-design/icons";
 const hoverMask = (
   <div
     className={
       "bg-gray-600 h-full w-full flex justify-center items-center text-white"
     }
   >
-    <IconCamera size={"large"} />
+    <CameraOutlined />
   </div>
 );
 
@@ -22,34 +21,31 @@ const UserSettingPage = (props: {
 }) => {
   const { email, name, avatar = "" } = props;
   const [loading, setLoading] = useState(false);
-  const ref = useRef({});
+  const [form] = Form.useForm();
   useEffect(() => {
     if (email) {
-      ref.current.setValues({ name, avatar });
+      form.setFieldsValue({ name, avatar });
     }
   }, [email]);
   const submit = async () => {
     try {
       setLoading(true);
-      const params = ref.current.getValues();
-      const { StatusCode } = await updateUser({
+      const params = form.getFieldsValue();
+      const res = await updateUser({
         ...params,
         email: email,
-        avatar: get(params, "avatar.[0].response", ""),
+        avatar: get(params, "avatar.[0].response.data", "") || avatar,
       });
-      if (StatusCode !== StatusCodes.OK) {
-        Toast.error("个人信息修改失败");
-        return;
+      if (!isEmpty(res)) {
+        message.success("个人信息修改成功");
+        setTimeout(() => window.location.reload(), 500);
       }
-      Toast.success("个人信息修改成功");
-      setTimeout(() => window.location.reload(), 500);
     } catch (e) {
       console.error("submit", e);
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <div
       className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
@@ -61,7 +57,7 @@ const UserSettingPage = (props: {
             修改个人信息
           </h2>
         </div>
-        <Form getFormApi={(api) => (ref.current = api)}>
+        <Form form={form}>
           {({ formApi }) => (
             <>
               <Form.Input
@@ -104,13 +100,15 @@ const UserSettingPage = (props: {
                 label="头像"
                 field="avatar"
                 limit={1}
+                maxSize={1000}
                 showUploadList={false}
-                onSuccess={() => Toast.success("头像上传成功")}
-                onError={(e) => Toast.error("头像上传失败", e?.message)}
+                onSizeError={() => message.error("头像大小应小于1MB")}
+                onSuccess={() => message.success("头像上传成功")}
+                onError={(e) => message.error("头像上传失败", e?.message)}
               >
                 <Avatar
                   src={
-                    formApi.getValue("avatar")?.[0]?.response ||
+                    formApi.getValue("avatar")?.[0]?.response?.data ||
                     formApi.getValue("avatar")
                   }
                   size={"large"}

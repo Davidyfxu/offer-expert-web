@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { get_teachers } from "../../pages/UserGroup/api";
-import { ArrayField, Button, Form, Modal, Toast } from "@douyinfe/semi-ui";
-import { IconMinusCircle, IconPlusCircle } from "@douyinfe/semi-icons";
+import { Button, Form, Input, Modal, Select } from "antd";
 import { StatusCodes } from "http-status-codes";
+import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
 interface IAssignTutor {
   email: string;
   name: string;
@@ -17,9 +17,11 @@ interface IAssignModal {
   }) => Promise<{ code: StatusCodes }>;
   cancel: () => void;
 }
+
 const AssignModal = (props: IAssignModal) => {
   const { visible, handleSubmit, cancel, title } = props;
   const [tutors, setTutors] = useState([]);
+  const [form] = Form.useForm();
   const ref = useRef();
   const getAllTeachers = async () => {
     try {
@@ -35,66 +37,65 @@ const AssignModal = (props: IAssignModal) => {
   }, []);
 
   const onOk = async () => {
-    try {
-      await ref.current?.validate();
-      const params = ref.current?.getValues();
-      const { code } = await handleSubmit(params);
-      if (code === StatusCodes.OK) {
-        Toast.success("导师分配成功");
-        setTimeout(() => cancel(), 500);
-      } else {
-        Toast.success("导师分配失败");
-      }
-    } catch (e) {
-      console.error("onOk", e);
-    }
+    await form.validateFields();
+    const params = form.getFieldsValue();
+    await handleSubmit(params);
+    setTimeout(() => cancel(), 500);
   };
 
   return (
     <Modal
       title={title}
-      visible={visible}
+      open={visible}
       onOk={onOk}
       onCancel={cancel}
       width={600}
     >
-      <Form labelPosition="left" getFormApi={(api) => (ref.current = api)}>
-        <ArrayField field="assignTutors" initValue={[]}>
-          {({ add, arrayFields }) => (
+      <Form form={form} labelPosition="left">
+        <Form.List name="assignTutors" initValue={[]}>
+          {(fields, { add, remove }) => (
             <React.Fragment>
-              <Button onClick={add} icon={<IconPlusCircle />} theme="light">
+              <Button onClick={add} icon={<PlusCircleOutlined />}>
                 添加
               </Button>
 
-              {arrayFields.map(({ field, key, remove }, i) => (
+              {fields.map((field, i) => (
                 <div
-                  key={key}
+                  key={i}
                   className={"w-full flex justify-between items-center"}
                 >
-                  <Form.Select
-                    label={"导师名称"}
-                    field={`${field}[email]`}
-                    placeholder="请选择成员"
-                    optionList={tutors.map((t) => ({
-                      label: t?.name,
-                      value: t?.email,
-                    }))}
+                  <Form.Item
+                    className={"w-full"}
+                    name={[field.name, "email"]}
+                    label="导师名称"
                     rules={[
                       { required: true, type: "email", message: "必选项" },
                     ]}
-                  />
-                  <Form.Input field={`${field}[note]`} label={"备注"} />
+                  >
+                    <Select
+                      placeholder="请选择成员"
+                      options={tutors.map((t) => ({
+                        label: t?.name,
+                        value: t?.email,
+                      }))}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    className={"w-full"}
+                    name={[field.name, "note"]}
+                    label="备注"
+                  >
+                    <Input placeholder="请输入备注" />
+                  </Form.Item>
                   <Button
-                    type="danger"
-                    theme="borderless"
-                    icon={<IconMinusCircle />}
-                    onClick={remove}
+                    icon={<MinusCircleOutlined />}
+                    onClick={() => remove(i)}
                   />
                 </div>
               ))}
             </React.Fragment>
           )}
-        </ArrayField>
+        </Form.List>
       </Form>
     </Modal>
   );
