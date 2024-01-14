@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Form, Avatar, message, Spin } from "antd";
 import { uploadAPI } from "../../utils/const";
-import { IconCamera } from "@douyinfe/semi-icons";
 import { updateUser } from "./apis";
 import { get, isEmpty } from "lodash-es";
+import { CameraOutlined } from "@ant-design/icons";
 const hoverMask = (
   <div
     className={
       "bg-gray-600 h-full w-full flex justify-center items-center text-white"
     }
   >
-    <IconCamera size={"large"} />
+    <CameraOutlined />
   </div>
 );
 
