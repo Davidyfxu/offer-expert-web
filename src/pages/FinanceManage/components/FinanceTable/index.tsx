@@ -15,7 +15,7 @@ import {
   DatePicker,
 } from "antd";
 import { useFinanceStore } from "../../store";
-import { IconMinusCircle, IconPlusCircle } from "@douyinfe/semi-icons";
+import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { ITransaction } from "../../types";
 
 const FinanceTable = () => {
@@ -137,7 +137,7 @@ const FinanceTable = () => {
             <Form.List name="salaries">
               {(fields, { add, remove }) => (
                 <>
-                  <Button onClick={() => add()} icon={<IconPlusCircle />}>
+                  <Button onClick={() => add()} icon={<PlusCircleOutlined />}>
                     添加
                   </Button>
                   {fields.map((field, idx) => (
@@ -177,7 +177,7 @@ const FinanceTable = () => {
                       </Form.Item>
 
                       <Button
-                        icon={<IconMinusCircle />}
+                        icon={<MinusCircleOutlined />}
                         onClick={() => remove(idx)}
                       />
                     </div>

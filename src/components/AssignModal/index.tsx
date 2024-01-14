@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { get_teachers } from "../../pages/UserGroup/api";
 import { Button, Form, Input, Modal, Select } from "antd";
-import { IconMinusCircle, IconPlusCircle } from "@douyinfe/semi-icons";
 import { StatusCodes } from "http-status-codes";
+import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
 interface IAssignTutor {
   email: string;
   name: string;
@@ -55,7 +55,7 @@ const AssignModal = (props: IAssignModal) => {
         <Form.List name="assignTutors" initValue={[]}>
           {(fields, { add, remove }) => (
             <React.Fragment>
-              <Button onClick={add} icon={<IconPlusCircle />}>
+              <Button onClick={add} icon={<PlusCircleOutlined />}>
                 添加
               </Button>
 
@@ -88,7 +88,7 @@ const AssignModal = (props: IAssignModal) => {
                     <Input placeholder="请输入备注" />
                   </Form.Item>
                   <Button
-                    icon={<IconMinusCircle />}
+                    icon={<MinusCircleOutlined />}
                     onClick={() => remove(i)}
                   />
                 </div>

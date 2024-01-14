@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Layout, Menu, Button, Avatar, Dropdown, Breadcrumb } from "antd";
-import { IconMoon } from "@douyinfe/semi-icons";
+import { HighlightOutlined } from "@ant-design/icons";
 import { routers, routers2 } from "../config/routers";
 import { Outlet, useNavigate } from "react-router-dom";
 import menuLogo from "../../assets/menuLogo.jpg";
@@ -68,7 +68,7 @@ const Home = (): React.ReactNode => {
             {/*    <Button*/}
             {/*      theme="borderless"*/}
             {/*      onClick={switchMode}*/}
-            {/*      icon={<IconMoon size="large" />}*/}
+            {/*      icon={<HighlightOutlined />}*/}
             {/*    />*/}
             {/*    <Avatar*/}
             {/*      src={avatar}*/}

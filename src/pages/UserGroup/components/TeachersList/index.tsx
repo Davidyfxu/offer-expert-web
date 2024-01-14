@@ -1,9 +1,9 @@
 import { Avatar, Input, Table } from "antd";
-import { IconSearch } from "@douyinfe/semi-icons";
 import React, { useCallback } from "react";
 import { debounce } from "lodash-es";
 import dayjs from "dayjs";
 import { GroupMap, RoleMap } from "../../const";
+import { SearchOutlined } from "@ant-design/icons";
 
 const TeachersList = (props: any) => {
   const { tutors, getAllTeachers, loading } = props;
@@ -51,9 +51,9 @@ const TeachersList = (props: any) => {
           className={"mb-4"}
           onCompositionEnd={onSearch}
           onChange={onSearch}
-          showClear
+          allowClear
           placeholder="请输入邮箱或昵称搜索"
-          prefix={<IconSearch />}
+          prefix={<SearchOutlined />}
         />
         <Table columns={columns} dataSource={tutors} loading={loading} />
       </div>

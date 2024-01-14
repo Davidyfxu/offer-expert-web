@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from "react";
-import { IconSync } from "@douyinfe/semi-icons";
 import { useFinanceStore } from "../../store";
 import { debounce } from "lodash-es";
+import { SyncOutlined } from "@ant-design/icons";
 
 const SearchPanel = () => {
   const getTransactions = useFinanceStore((state) => state.getTransactions);
@@ -41,7 +41,7 @@ const SearchPanel = () => {
         </div>
       </div>
       <button className={"btn btn-success"} onClick={syncFinance}>
-        <IconSync /> 一键同步
+        <SyncOutlined /> 一键同步
       </button>
     </div>
   );
