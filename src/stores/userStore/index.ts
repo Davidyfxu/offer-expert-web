@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { message } from "antd";
 import { init, login, register } from "../../common/api";
+import { isEmpty } from "lodash-es";
 interface IUserStoreState {
   name: string;
   email: string;
@@ -47,7 +48,7 @@ export const useUserStore = create<IUserStoreState>()((set) => ({
         ...props,
         password: btoa(props.password),
       });
-      set((state) => ({
+      set(() => ({
         ...user,
         loading: false,
       }));
@@ -61,14 +62,14 @@ export const useUserStore = create<IUserStoreState>()((set) => ({
   },
   init: async (): Promise<any> => {
     try {
-      set((state) => ({ loading: true }));
-      const { user } = await init({});
-      set((state) => ({
-        ...user,
+      set(() => ({ loading: true }));
+      const res = await init({});
+
+      set(() => ({
+        ...res?.user,
         loading: false,
       }));
-
-      return { redirect: false };
+      return { redirect: isEmpty(res) };
     } catch (e) {
       console.error("loginUser", e);
       set(() => ({

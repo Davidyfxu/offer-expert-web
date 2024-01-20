@@ -189,31 +189,31 @@ const FinanceTable = () => {
         </Spin>
       </Modal>
       <Drawer title="资金往来" open={detailV} onClose={() => setDetailV(false)}>
-        <Form getFormApi={(api) => (ref.current = api)}>
-          <Row>
-            <Col span={16}>
-              <Form.TagInput
-                initValue={["文书", "项管", "网申", "选校"]}
-                name="jobs"
-                label="工作项"
-                placeholder="请输入工作内容"
-                style={{ width: "100%" }}
-              />
-            </Col>
-            <Col span={7} offset={1}>
-              <Form.InputNumber
-                name="owner"
-                initValue={100}
-                min={0}
-                precision={0}
-                suffix={"￥"}
-                label="工资金额"
-                rules={[{ required: true }]}
-                style={{ width: "100%" }}
-              />
-            </Col>
-          </Row>
-        </Form>
+        {/*<Form getFormApi={(api) => (ref.current = api)}>*/}
+        {/*  <Row>*/}
+        {/*    <Col span={16}>*/}
+        {/*      <Form.TagInput*/}
+        {/*        initValue={["文书", "项管", "网申", "选校"]}*/}
+        {/*        name="jobs"*/}
+        {/*        label="工作项"*/}
+        {/*        placeholder="请输入工作内容"*/}
+        {/*        style={{ width: "100%" }}*/}
+        {/*      />*/}
+        {/*    </Col>*/}
+        {/*    <Col span={7} offset={1}>*/}
+        {/*      <Form.InputNumber*/}
+        {/*        name="owner"*/}
+        {/*        initValue={100}*/}
+        {/*        min={0}*/}
+        {/*        precision={0}*/}
+        {/*        suffix={"￥"}*/}
+        {/*        label="工资金额"*/}
+        {/*        rules={[{ required: true }]}*/}
+        {/*        style={{ width: "100%" }}*/}
+        {/*      />*/}
+        {/*    </Col>*/}
+        {/*  </Row>*/}
+        {/*</Form>*/}
       </Drawer>
     </>
   );

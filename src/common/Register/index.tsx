@@ -14,8 +14,7 @@ const Register = () => {
     form.validateFields().then((value) => {
       const { name, email, password, confirmPwd } = value;
       if (password !== confirmPwd) return;
-      console.log("handleSubmit", value);
-      // void registerUser({ name, email, password });
+      void registerUser({ name, email, password });
     });
   }
 

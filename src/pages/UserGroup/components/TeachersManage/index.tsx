@@ -45,17 +45,20 @@ const TeachersManage = (props: any) => {
           <Collapse
             className={"border-2 rounded-lg"}
             defaultActiveKey={Object.keys(GroupMap)}
-          >
-            {Object.keys(GroupMap).map((g, idx) => (
-              <Collapse.Panel key={idx} header={GroupMap[g]} itemKey={g}>
-                {tutors
-                  .filter((tutor) => tutor?.group === Number(g))
-                  .map((t, idx) => (
-                    <div key={idx}>{t?.name}</div>
-                  ))}
-              </Collapse.Panel>
-            ))}
-          </Collapse>
+            items={Object.keys(GroupMap).map((g, idx) => ({
+              key: idx,
+              children: (
+                <div>
+                  {tutors
+                    .filter((t) => String(t.group) === g)
+                    .map((t, idx) => (
+                      <div key={`${g}-${idx}`}>{t?.name}</div>
+                    ))}
+                </div>
+              ),
+              label: GroupMap[g],
+            }))}
+          />
         </div>
       </div>
       <Modal

@@ -8,7 +8,4 @@ export default {
     themes: ["light", "dark"],
   },
   plugins: [require("daisyui")],
-  // corePlugins: {
-  //   preflight: false,
-  // },
 };

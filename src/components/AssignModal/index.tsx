@@ -22,7 +22,6 @@ const AssignModal = (props: IAssignModal) => {
   const { visible, handleSubmit, cancel, title } = props;
   const [tutors, setTutors] = useState([]);
   const [form] = Form.useForm();
-  const ref = useRef();
   const getAllTeachers = async () => {
     try {
       const { teachers = [] } = await get_teachers({});
