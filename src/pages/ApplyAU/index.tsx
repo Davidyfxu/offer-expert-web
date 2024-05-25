@@ -8,6 +8,7 @@ import AssignModal from "../../components/AssignModal";
 import { StatusCodes } from "http-status-codes";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import { MoreOutlined } from "@ant-design/icons";
 const { Text, Title } = Typography;
 const ApplyAU = () => {
   const navigate = useNavigate();
@@ -100,7 +101,7 @@ const ApplyAU = () => {
     },
     {
       title: "详情",
-      width: 200,
+      width: 300,
       fixed: "right",
       dataIndex: "Action",
       render: (text: any, record: IAUCase) => (
@@ -113,14 +114,6 @@ const ApplyAU = () => {
             Go
           </Button>
           <Button
-            onClick={() => {
-              setDetail(record);
-              setVisible(true);
-            }}
-          >
-            详情
-          </Button>
-          <Button
             onClick={() =>
               window.open(`${AU_URL}/applyAU?_id=${record?._id}`, "_blank")
             }
@@ -128,38 +121,33 @@ const ApplyAU = () => {
             编辑
           </Button>
           <Dropdown
-            trigger={"click"}
-            render={
-              <Dropdown.Menu>
-                <Dropdown.Item
-                  onClick={() =>
-                    setAssignModal({
-                      v: true,
-                      t: `${record?.lastName} ${record?.firstName}分配导师`,
-                      _id: record?._id,
-                    })
-                  }
-                >
-                  指派
-                </Dropdown.Item>
-                <Dropdown.Item>
-                  <Popconfirm
-                    position={"left"}
-                    title="再次确定是否要删除？"
-                    content="此删除将不可逆"
-                    okButtonProps={{
-                      autoFocus: true,
-                      type: "danger",
-                    }}
-                    onConfirm={() => deleteCase(record?._id)}
-                  >
-                    删除
-                  </Popconfirm>
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            }
+            placement={"bottomLeft"}
+            menu={{
+              items: [
+                {
+                  key: "1",
+                  label: (
+                    <a
+                      onClick={() =>
+                        setAssignModal({
+                          v: true,
+                          t: `${record?.lastName} ${record?.firstName}分配导师`,
+                          _id: record?._id,
+                        })
+                      }
+                    >
+                      指派
+                    </a>
+                  ),
+                },
+                {
+                  key: "2",
+                  label: <a onClick={() => deleteCase(record?._id)}>删除</a>,
+                },
+              ],
+            }}
           >
-            <Button>more</Button>
+            <Button icon={<MoreOutlined />} />
           </Dropdown>
         </div>
       ),
@@ -172,7 +160,7 @@ const ApplyAU = () => {
       name: string;
       note: string;
     }>;
-  }): Promise<{ code: StatusCodes }> => {
+  }) => {
     try {
       await assign_au_case({
         ...params,
@@ -187,14 +175,19 @@ const ApplyAU = () => {
   };
 
   return (
-    <div className={"flex flex-col"}>
-      <Title link={{ href: AU_URL, target: "_blank" }}>澳洲申请</Title>
-      <Table loading={loading} columns={columns as any} dataSource={records} />
-      <DetailSheet
-        visible={visible}
-        detail={detail}
-        onCancel={() => setVisible(false)}
+    <div className={"p-4"}>
+      <Title>澳洲申请</Title>
+      <Table
+        scroll={{ x: 800 }}
+        loading={loading}
+        columns={columns as any}
+        dataSource={records.map((r) => ({ key: r?._id, ...r }))}
       />
+      {/*<DetailSheet*/}
+      {/*  visible={visible}*/}
+      {/*  detail={detail}*/}
+      {/*  onCancel={() => setVisible(false)}*/}
+      {/*/>*/}
       <AssignModal
         visible={assignModal.v}
         title={assignModal?.t || ""}

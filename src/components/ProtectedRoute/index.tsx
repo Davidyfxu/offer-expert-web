@@ -3,7 +3,7 @@ import { useUserStore } from "../../stores/userStore";
 import { useNavigate } from "react-router-dom";
 import Loading from "../Loading";
 
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+const ProtectedRoute = ({ children }: { children: React.ReactNode }): any => {
   const navigate = useNavigate();
 
   const loading = useUserStore((state) => state.loading);

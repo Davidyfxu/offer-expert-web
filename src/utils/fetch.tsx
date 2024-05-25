@@ -1,7 +1,7 @@
 import { message } from "antd";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
-export const BASE_URL = "https://cpvg7c.laf.dev";
+export const BASE_URL = "https://oevtp9dizy.gzg.sealos.run/";
 
 class HttpClient {
   private api: AxiosInstance;
@@ -49,10 +49,13 @@ const httpClient = new HttpClient({
 
 export const post = async (url: string, body: any): Promise<any> => {
   try {
-    const { data } = await httpClient.post(url, body);
+    const { data } = await httpClient.post(url, body, {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    });
     return data;
   } catch (e: any) {
     console.error("Error:", e);
-    message.error(e.toString());
   }
 };
