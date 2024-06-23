@@ -28,7 +28,6 @@ const UserSettingPage = (props: {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const isUpdatePSW = Form.useWatch("isUpdatePSW", form);
-  console.log("avatar", avatar);
   const [imageUrl, setImageUrl] = useState();
 
   useEffect(() => {
@@ -84,9 +83,7 @@ const UserSettingPage = (props: {
     }
   };
 
-  const uploadButton = (
-    <div>{loading ? <LoadingOutlined /> : <UploadOutlined />}</div>
-  );
+  const uploadButton = loading ? <LoadingOutlined /> : <UploadOutlined />;
   return (
     <div
       className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
@@ -140,15 +137,7 @@ const UserSettingPage = (props: {
             }}
           >
             <Upload name="logo" action={uploadAPI} listType="picture">
-              {imageUrl ? (
-                <img
-                  src={imageUrl}
-                  alt="avatar"
-                  className={"w-full h-auto mx-auto my-auto"}
-                />
-              ) : (
-                uploadButton
-              )}
+              <Button icon={<UploadOutlined />}>Upload</Button>
             </Upload>
           </Form.Item>
         </Form>
