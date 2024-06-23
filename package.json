@@ -40,6 +40,7 @@
     "typescript": "^4.9.3",
     "vite": "^4.1.0",
     "@uiw/react-watermark": "^1.0.1",
-    "axios": "^1.6.2"
+    "axios": "^1.6.2",
+    "jsoneditor": "^10.1.0"
   }
 }
