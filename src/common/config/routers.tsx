@@ -1,39 +1,13 @@
 import React from "react";
 import {
   ApartmentOutlined,
+  FileDoneOutlined,
   HomeOutlined,
   MoneyCollectOutlined,
   UsergroupAddOutlined,
   UserSwitchOutlined,
 } from "@ant-design/icons";
 
-export const routers = [
-  {
-    itemKey: "applyAU",
-    text: "澳洲申请",
-    icon: <HomeOutlined />,
-  },
-  {
-    itemKey: "applyManage",
-    text: "申请管理",
-    icon: <ApartmentOutlined />,
-  },
-  {
-    itemKey: "userGroup",
-    text: "导师管理",
-    icon: <UsergroupAddOutlined />,
-  },
-  {
-    itemKey: "userSetting",
-    text: "用户设置",
-    icon: <UserSwitchOutlined />,
-  },
-  {
-    itemKey: "finance",
-    text: "财务管理",
-    icon: <MoneyCollectOutlined />,
-  },
-];
 export const routers2 = [
   {
     key: "applyAU",
@@ -59,5 +33,10 @@ export const routers2 = [
     key: "finance",
     label: "财务管理",
     icon: <MoneyCollectOutlined />,
+  },
+  {
+    key: "websiteManage",
+    label: "官网管理",
+    icon: <FileDoneOutlined />,
   },
 ];
