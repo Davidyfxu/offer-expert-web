@@ -46,9 +46,6 @@ devDependencies:
   '@types/react-dom':
     specifier: ^18.0.10
     version: 18.2.18
-  '@uiw/react-watermark':
-    specifier: ^1.0.1
-    version: 1.0.1(react-dom@18.2.0)(react@18.2.0)
   '@vitejs/plugin-react':
     specifier: ^3.1.0
     version: 3.1.0(vite@4.5.2)
@@ -847,21 +844,6 @@ packages:
 
   /@types/unist@3.0.2:
     resolution: {integrity: sha512-dqId9J8K/vGi5Zr7oo212BGii5m3q5Hxlkwy3WpYuKPklmBEvsbMYYyLxAQpSffdLl/gdW0XUpKWFvYmyoWCoQ==}
-    dev: true
-
-  /@uiw/react-watermark@1.0.1(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-vgredbDTD0YUjLICXiAFEt7z+lmBGAos+iApedsBdEBkkTxxINCsA3cNYKGJTohMOfa4kFQ/+RR7ygVSsisnfw==}
-    peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
-    dependencies:
-      '@uiw/watermark.js': 1.0.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: true
-
-  /@uiw/watermark.js@1.0.1:
-    resolution: {integrity: sha512-ymn0LPfp9f4UhMIFonSEHtRnuF32OCLieQs3dQu0gJpXXqz4bnAdMU4Gx+qLr2oWdS6l3IMrDQLEYAhDytxLuA==}
     dev: true
 
   /@ungap/structured-clone@1.2.0:
